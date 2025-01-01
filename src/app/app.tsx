@@ -1,6 +1,5 @@
 import Navbar from "components/navbar";
-
-
+import ChartWindow from "components/ChartWindow";
 
 function App() {
   return (
@@ -10,11 +9,11 @@ function App() {
 
       {/* Header */}
       <header className="pt-16 z-10 relative max-w-screen-lg xl:max-w-screen-xl mx-auto">
-
+        {/* You can add content or titles here */}
       </header>
 
-
-
+      {/* Chart Window */}
+      <ChartWindow />
     </main>
   );
 }

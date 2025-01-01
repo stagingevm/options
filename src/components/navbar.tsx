@@ -27,7 +27,10 @@ function Navbar() {
     <nav className="w-full bg-black text-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         {/* Logo */}
-        <div className="text-xl font-bold">ABSTRACT TESTNET</div>
+        <div className="text-xxl font-bold" style={{ color: '#18e582' }}>
+          MyEVM
+        </div>
+
 
         {/* Wallet Button */}
         <div>

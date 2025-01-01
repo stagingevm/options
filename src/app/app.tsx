@@ -27,7 +27,7 @@ function App() {
       {/* Header */}
       <header className="pt-16 z-10 relative max-w-screen-lg xl:max-w-screen-xl mx-auto">
         <h1 className="text-6xl lg:text-7xl leading-none font-extrabold tracking-tight mb-8 sm:mb-10 text-purple-400">
-          React + TypeScript + Tailwind
+          Data
         </h1>
       </header>
 

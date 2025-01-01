@@ -11,6 +11,13 @@ module.exports = {
       animation: {
         slide: "slide 4s linear infinite", // Added for consistency
       },
+      fontSize: {
+        xxl: "3rem", // Custom size example
+        giant: "10rem", // Even larger size
+      },
+      colors: {
+        evmGreen: "#18e582", // Adding the specific green color you mentioned
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],

@@ -22,7 +22,7 @@ const OptionsTable: React.FC = () => {
   ];
 
   const timeLabels = [
-    { time: "10m", shade: "#80e4ff" }, // Lightest shade
+    { time: "10m", shade: "#80e4ff" },
     { time: "30m", shade: "#67d6f9" },
     { time: "1h", shade: "#4fc9f3" },
     { time: "2h", shade: "#39bdeb" },
@@ -31,44 +31,34 @@ const OptionsTable: React.FC = () => {
     { time: "12h", shade: "#0f97d9" },
     { time: "1d", shade: "#087cc2" },
     { time: "3d", shade: "#056fb2" },
-    { time: "7d", shade: "#046aac" }, // Darkest shade
+    { time: "7d", shade: "#046aac" },
   ];
-  
+
   return (
-    <div className="overflow-x-auto p-4">
-      <table className="table-auto border-collapse border border-gray-700 text-white w-full">
+    <div className="overflow-auto w-full h-full p-2">
+      <table className="table-fixed border-collapse border border-gray-700 text-white w-full h-full">
         <tbody>
-          {/* Positive Rows */}
           {positiveValues.map((row, index) => (
             <tr key={index}>
               <td
-                className="border border-gray-700 text-black px-4 py-2 text-center"
-                style={{ backgroundColor: row.shade, width: "100px" }}
+                className="border border-gray-700 text-black text-center"
+                style={{ backgroundColor: row.shade, width: "10%" }}
               >
-                {row.value}
+                <span className="value-text">{row.value}</span>
               </td>
               {Array(10)
                 .fill(null)
                 .map((_, colIndex) => (
-                  <td
-                    key={colIndex}
-                    className="border border-gray-700 text-center"
-                  ></td>
+                  <td key={colIndex} className="border border-gray-700"></td>
                 ))}
             </tr>
           ))}
-
-          {/* Ethereum and Time Row */}
           <tr>
             <td
-              className="border border-gray-700 bg-black text-white px-4 py-2 text-center"
-              style={{ width: "100px" }}
+              className="border border-gray-700 bg-black text-white text-center"
+              style={{ width: "10%" }}
             >
-              <img
-                src="/path/to/eth-logo.png"
-                alt="Ethereum"
-                className="h-6 inline"
-              />
+              Ethereum
             </td>
             {timeLabels.map((label, index) => (
               <td
@@ -80,23 +70,18 @@ const OptionsTable: React.FC = () => {
               </td>
             ))}
           </tr>
-
-          {/* Negative Rows */}
           {negativeValues.map((row, index) => (
             <tr key={index}>
               <td
-                className="border border-gray-700 text-black px-4 py-2 text-center"
-                style={{ backgroundColor: row.shade, width: "100px" }}
+                className="border border-gray-700 text-black text-center"
+                style={{ backgroundColor: row.shade, width: "10%" }}
               >
-                {row.value}
+                <span className="value-text">{row.value}</span>
               </td>
               {Array(10)
                 .fill(null)
                 .map((_, colIndex) => (
-                  <td
-                    key={colIndex}
-                    className="border border-gray-700 text-center"
-                  ></td>
+                  <td key={colIndex} className="border border-gray-700"></td>
                 ))}
             </tr>
           ))}
@@ -107,3 +92,4 @@ const OptionsTable: React.FC = () => {
 };
 
 export default OptionsTable;
+

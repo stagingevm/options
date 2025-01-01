@@ -106,3 +106,15 @@ a:hover .liquid {
     transform: translate(-50%, -75%) rotate(360deg);
   }
 }
+
+
+/* Mobile font size adjustment and removing % symbol on mobile */
+@media (max-width: 768px) {
+  .value-text {
+    display: block;
+  }
+
+  .value-text::after {
+    content: "";
+  }
+}

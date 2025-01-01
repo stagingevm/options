@@ -54,6 +54,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   chart: {
     flex: 2, // Larger top component
     display: "flex",
+    marginBottom: "15px", // Adds 5px margin below the chart
   },
   bottomRow: {
     flex: 1, // Bottom row with equal spacing

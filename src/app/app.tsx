@@ -1,21 +1,65 @@
-import Navbar from "components/navbar";
-import ChartWindow from "components/ChartWindow";
+import React from "react";
+import Navbar from "../components/navbar"; // Import Navbar
+import Sidebar from "../components/sidebar";
+import ChartComponent from "../components/ChartComponent";
+import TradingComponent from "../components/TradingComponent";
+import StatsComponent from "../components/StatsComponent";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <main>
+    <div style={styles.appContainer}>
       {/* Navbar */}
       <Navbar />
 
-      {/* Header */}
-      <header className="pt-16 z-10 relative max-w-screen-lg xl:max-w-screen-xl mx-auto">
-        {/* You can add content or titles here */}
-      </header>
+      <div style={styles.contentContainer}>
+        {/* Sidebar */}
+        <Sidebar />
 
-      {/* Chart Window */}
-      <ChartWindow />
-    </main>
+        {/* Main Content */}
+        <div style={styles.mainContent}>
+          {/* Chart Component */}
+          <div style={styles.chart}>
+            <ChartComponent />
+          </div>
+
+          {/* Bottom Row */}
+          <div style={styles.bottomRow}>
+            <TradingComponent />
+            <StatsComponent />
+          </div>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+const styles: { [key: string]: React.CSSProperties } = {
+  appContainer: {
+    display: "flex",
+    flexDirection: "column", // Column layout to include Navbar
+    height: "100vh", // Full viewport height
+    width: "100vw", // Full viewport width
+    backgroundColor: "#0c0c0c", // Black background
+  },
+  contentContainer: {
+    display: "flex",
+    flex: 1, // Takes up all remaining space below Navbar
+  },
+  mainContent: {
+    flex: 1, // Takes the remaining space next to Sidebar
+    display: "flex",
+    flexDirection: "column",
+    padding: "10px",
+  },
+  chart: {
+    flex: 2, // Larger top component
+    display: "flex",
+  },
+  bottomRow: {
+    flex: 1, // Bottom row with equal spacing
+    display: "flex",
+    flexDirection: "row",
+  },
+};
 
 export default App;

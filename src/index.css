@@ -3,9 +3,18 @@
 @tailwind utilities;
 
 @layer base {
-  html {
+  html, body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
+    background-color: #0c0c0c; /* Solid black background */
+    color: #ffffff; /* Optional: Set text color to white for visibility */
+    height: 100%; /* Ensures the full height for the root container */
+  }
+
+  #root {
+    height: 100%; /* Ensures the React root container takes full height */
+    display: flex;
+    flex-direction: column;
   }
 
   @keyframes slide {

@@ -6,25 +6,25 @@ interface OptionsTableProps {
 
 const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
   const positiveValues = [
-    { value: "+20%", shade: "#18e582" },
-    { value: "+10%", shade: "#28f087" },
-    { value: "+5%", shade: "#3bfa8f" },
-    { value: "+3%", shade: "#50ffa4" },
-    { value: "+1%", shade: "#71ffb8" },
-    { value: "+0.5%", shade: "#91ffd2" },
-    { value: "+0.25%", shade: "#c5ffe6", },
+    { value: "+20%", shade: "#18e582", values: [1200] },
+    { value: "+10%", shade: "#28f087", values: [683] },
+    { value: "+5%", shade: "#3bfa8f", values: [424] },
+    { value: "+3%", shade: "#50ffa4", values: [320] },
+    { value: "+1%", shade: "#71ffb8", values: [217] },
+    { value: "+0.5%", shade: "#91ffd2", values: [191] },
+    { value: "+0.25%", shade: "#c5ffe6", values:  [178]  },
     { value: "UP", shade: "#c5ffe6", values: [165, 159, 153, 147, 141, 134, 128, 122, 116, 110]  },
   ];
 
   const negativeValues = [
-    { value: "DOWN", shade: "#ff8080", values: [165, 159, 153, 147, 141, 134, 128, 122, 116, 110]  },
-    { value: "-0.25%", shade: "#ff8080"},
-    { value: "-0.5%", shade: "#ff6666" },
-    { value: "-1%", shade: "#ff4d4d" },
-    { value: "-3%", shade: "#ff3333" },
-    { value: "-5%", shade: "#ff1a1a" },
-    { value: "-10%", shade: "#ff0000" },
-    { value: "-20%", shade: "#ce0404" },
+    { value: "DOWN", shade: "#ff8080", values: [165, 159, 153, 147, 141, 134, 128, 122, 116, 110] },
+    { value: "-0.25%", shade: "#ff8080", values: [178] },
+    { value: "-0.5%", shade: "#ff6666", values: [191] },
+    { value: "-1%", shade: "#ff4d4d", values: [217] },
+    { value: "-3%", shade: "#ff3333", values: [320] },
+    { value: "-5%", shade: "#ff1a1a", values: [424] },
+    { value: "-10%", shade: "#ff0000", values: [683] },
+    { value: "-20%", shade: "#ce0404", values: [1200] },
   ];
 
   const timeLabels = [

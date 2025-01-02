@@ -3,7 +3,7 @@ import React from "react";
 const TradingComponent: React.FC = () => {
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Trading</h2>
+
     </div>
   );
 };

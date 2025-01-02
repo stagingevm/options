@@ -3,7 +3,7 @@ import React from "react";
 const StatsComponent: React.FC = () => {
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Stats</h2>
+
     </div>
   );
 };

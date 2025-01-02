@@ -1,76 +1,77 @@
-/**
- * Function to calculate smoothed payouts for movements.
- * @param multiplier Multiplier for the percentage movement (e.g., 20 for 20%).
- * @param maxMultiplier Maximum multiplier (e.g., 80 for 20%).
- * @param maxPayout Maximum payout (e.g., 1200).
- * @param minPayout Minimum payout (e.g., 165).
- * @returns Smoothed payout.
- */
-export const calculateSmoothedPayout = (
-    multiplier: number,
-    maxMultiplier: number,
-    maxPayout: number,
-    minPayout: number
-  ): number => {
-    // Base payout using scaling factor
-    const scalingFactor = maxPayout / maxMultiplier; // e.g., 1200 / 80 = 15
-    const basePayout = multiplier * scalingFactor;
+export interface OptionsPricingParams {
+    movement: number; // Percentage movement, e.g., 0.25 for 0.25%
+    timeframe: number; // Time in minutes, e.g., 10 for 10m
+    base10MinPayout: number; // Payout for 10 minutes (base case)
+    base7DayPayout: number; // Payout for 7 days (base case)
+  }
   
-    // Baseline adjustment
-    const baselineAdjustment =
-      minPayout - (minPayout * multiplier) / maxMultiplier;
+  // Function to calculate smoothed payouts based on movement and timeframe
+  export const calculatePayout = ({
+    movement,
+    timeframe,
+    base10MinPayout,
+    base7DayPayout,
+  }: OptionsPricingParams): number => {
+    const maxTimeframe = 7 * 24 * 60; // 7 days in minutes
+    const minTimeframe = 10; // Base 10-minute timeframe
   
-    // Smoothed payout
-    return Math.round(basePayout + baselineAdjustment);
+    // Calculate time smoothing factor
+    const timeFactor = Math.pow((maxTimeframe - timeframe) / (maxTimeframe - minTimeframe), 0.5);
+  
+    // Interpolate payout based on time and movement
+    const payout = base10MinPayout + (base7DayPayout - base10MinPayout) * timeFactor;
+  
+    // Scale payout by movement
+    return payout * (movement / 0.25);
   };
   
-  // Payout settings for positive and negative movements
-  export const positiveMovements = [
-    { value: "+20%", multiplier: 80, shade: "#18e582", maxPayout: 1200 },
-    { value: "+10%", multiplier: 40, shade: "#28f087" },
-    { value: "+5%", multiplier: 20, shade: "#3bfa8f" },
-    { value: "+3%", multiplier: 12, shade: "#50ffa4" },
-    { value: "+1%", multiplier: 4, shade: "#71ffb8" },
-    { value: "+0.5%", multiplier: 2, shade: "#91ffd2" },
-    { value: "+0.25%", multiplier: 1, shade: "#c5ffe6", minPayout: 165 },
+  // Predefined payout data for positive and negative movements
+  export const predefinedMovements = [
+    { movement: 20, base10MinPayout: 1200 },
+    { movement: 10, base10MinPayout: 683 },
+    { movement: 5, base10MinPayout: 424 },
+    { movement: 3, base10MinPayout: 320 },
+    { movement: 1, base10MinPayout: 217 },
+    { movement: 0.5, base10MinPayout: 191 },
+    { movement: 0.25, base10MinPayout: 178 },
   ];
   
-  export const negativeMovements = [
-    { value: "-0.25%", multiplier: 1, shade: "#ff8080", minPayout: 165 },
-    { value: "-0.5%", multiplier: 2, shade: "#ff6666" },
-    { value: "-1%", multiplier: 4, shade: "#ff4d4d" },
-    { value: "-3%", multiplier: 12, shade: "#ff3333" },
-    { value: "-5%", multiplier: 20, shade: "#ff1a1a" },
-    { value: "-10%", multiplier: 40, shade: "#ff0000" },
-    { value: "-20%", multiplier: 80, shade: "#ce0404", maxPayout: 1200 },
+  // Timeframes in minutes
+  export const predefinedTimeframes = [
+    { label: "10m", minutes: 10 },
+    { label: "30m", minutes: 30 },
+    { label: "1h", minutes: 60 },
+    { label: "2h", minutes: 120 },
+    { label: "4h", minutes: 240 },
+    { label: "6h", minutes: 360 },
+    { label: "12h", minutes: 720 },
+    { label: "1d", minutes: 1440 },
+    { label: "3d", minutes: 4320 },
+    { label: "7d", minutes: 10080 },
   ];
   
-  // Calculate payouts for 10-minute column
-  export const calculateTenMinutePayouts = () => {
-    const maxMultiplier = 80;
-    const maxPayout = 1200;
-    const minPayout = 165;
-  
-    // Positive movements
-    const positivePayouts = positiveMovements.map((movement) =>
-      calculateSmoothedPayout(
-        movement.multiplier,
-        maxMultiplier,
-        maxPayout,
-        minPayout
-      )
-    );
-  
-    // Negative movements
-    const negativePayouts = negativeMovements.map((movement) =>
-      calculateSmoothedPayout(
-        movement.multiplier,
-        maxMultiplier,
-        maxPayout,
-        minPayout
-      )
-    );
-  
-    return { positivePayouts, negativePayouts };
+  // Function to generate the full payout matrix
+  export const generatePayoutMatrix = (
+    base10MinPayout: number,
+    base7DayPayout: number
+  ): { movement: number; payouts: number[] }[] => {
+    return predefinedMovements.map((movementData) => {
+      const payouts = predefinedTimeframes.map((timeframe) =>
+        calculatePayout({
+          movement: movementData.movement,
+          timeframe: timeframe.minutes,
+          base10MinPayout: movementData.base10MinPayout,
+          base7DayPayout,
+        })
+      );
+      return {
+        movement: movementData.movement,
+        payouts,
+      };
+    });
   };
+  
+  // Example usage
+  const payoutMatrix = generatePayoutMatrix(165, 110);
+  console.log(payoutMatrix);
   

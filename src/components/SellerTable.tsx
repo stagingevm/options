@@ -41,28 +41,30 @@ const SellerTable: React.FC<SellerTableProps> = ({ selectedTokenPrice }) => {
     <div className="overflow-auto w-full h-full p-2">
       <table className="table-fixed border-collapse border border-gray-700 text-white w-full h-full">
         <tbody>
-          {/* Render seller values */}
-          {sellerValues.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              <td
-                className="border border-gray-700 text-black text-center"
-                style={{ backgroundColor: row.shade, width: "10%" }}
-              >
-                {row.value}
-              </td>
-              {timeLabels.map((_, colIndex) => (
+          {/* Render positive values */}
+          {sellerValues
+            .slice(0, sellerValues.findIndex((row) => row.value === "DOWN")) // Include values above DOWN
+            .map((row, rowIndex) => (
+              <tr key={`row-${rowIndex}`}>
                 <td
-                  key={colIndex}
-                  className="border border-gray-700 text-center"
-                  style={{ backgroundColor: "transparent" }}
+                  className="border border-gray-700 text-black text-center"
+                  style={{ backgroundColor: row.shade, width: "10%" }}
                 >
-                  {row.values[colIndex]}
+                  {row.value}
                 </td>
-              ))}
-            </tr>
-          ))}
+                {timeLabels.map((_, colIndex) => (
+                  <td
+                    key={`value-${colIndex}`}
+                    className="border border-gray-700 text-center"
+                    style={{ backgroundColor: "transparent" }}
+                  >
+                    {row.values[colIndex]}
+                  </td>
+                ))}
+              </tr>
+            ))}
 
-          {/* Middle row for current price and time labels */}
+          {/* Time labels */}
           <tr>
             <td
               className="border border-gray-700 bg-black text-white text-center"
@@ -74,7 +76,7 @@ const SellerTable: React.FC<SellerTableProps> = ({ selectedTokenPrice }) => {
             </td>
             {timeLabels.map((label, index) => (
               <td
-                key={index}
+                key={`time-${index}`}
                 className="border border-gray-700 text-center"
                 style={{ backgroundColor: label.shade }}
               >
@@ -82,6 +84,29 @@ const SellerTable: React.FC<SellerTableProps> = ({ selectedTokenPrice }) => {
               </td>
             ))}
           </tr>
+
+          {/* Render negative values */}
+          {sellerValues
+            .slice(sellerValues.findIndex((row) => row.value === "DOWN")) // Include values below UP
+            .map((row, rowIndex) => (
+              <tr key={`row-neg-${rowIndex}`}>
+                <td
+                  className="border border-gray-700 text-black text-center"
+                  style={{ backgroundColor: row.shade, width: "10%" }}
+                >
+                  {row.value}
+                </td>
+                {timeLabels.map((_, colIndex) => (
+                  <td
+                    key={`neg-value-${colIndex}`}
+                    className="border border-gray-700 text-center"
+                    style={{ backgroundColor: "transparent" }}
+                  >
+                    {row.values[colIndex]}
+                  </td>
+                ))}
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

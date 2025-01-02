@@ -1,7 +1,8 @@
 import React from "react";
+import { calculateOptionPrice, timeLabelToYears } from "./optionsPricing";
 
 interface OptionsTableProps {
-  selectedTokenPrice: number | null; // Expecting the price to be passed as a prop
+  selectedTokenPrice: number | null;
 }
 
 const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
@@ -13,9 +14,11 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
     { value: "+1%", shade: "#71ffb8" },
     { value: "+0.5%", shade: "#91ffd2" },
     { value: "+0.25%", shade: "#c5ffe6" },
+    { value: "UP", shade: "#c5ffe6" },
   ];
 
   const negativeValues = [
+    { value: "DOWN", shade: "#ff8080" },
     { value: "-0.25%", shade: "#ff8080" },
     { value: "-0.5%", shade: "#ff6666" },
     { value: "-1%", shade: "#ff4d4d" },
@@ -42,27 +45,55 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
     <div className="overflow-auto w-full h-full p-2">
       <table className="table-fixed border-collapse border border-gray-700 text-white w-full h-full">
         <tbody>
-          {positiveValues.map((row, index) => (
-            <tr key={index}>
+          {/* Render positive values */}
+          {positiveValues.map((row, rowIndex) => (
+            <tr key={rowIndex}>
               <td
                 className="border border-gray-700 text-black text-center"
                 style={{ backgroundColor: row.shade, width: "10%" }}
               >
-                <span className="value-text">{row.value}</span>
+                {row.value}
               </td>
-              {Array(10)
-                .fill(null)
-                .map((_, colIndex) => (
-                  <td key={colIndex} className="border border-gray-700"></td>
-                ))}
+              {timeLabels.map((timeLabel, colIndex) => {
+                const movement = parseFloat(row.value.replace("%", "")) / 100 || 0;
+                const timeInYears = timeLabelToYears(timeLabel.time);
+                const strikePrice =
+                  selectedTokenPrice !== null
+                    ? selectedTokenPrice * (1 + movement)
+                    : 0;
+
+                const optionPrice =
+                  selectedTokenPrice !== null
+                    ? calculateOptionPrice(
+                        selectedTokenPrice,
+                        strikePrice,
+                        timeInYears,
+                        0.5, // Volatility placeholder
+                        0.01 // Risk-free rate placeholder
+                      )
+                    : null;
+
+                return (
+                  <td
+                    key={colIndex}
+                    className="border border-gray-700 text-center"
+                    style={{ backgroundColor: "transparent" }}
+                  >
+                    {optionPrice !== null
+                      ? `$${optionPrice.toFixed(2)}`
+                      : "Loading..."}
+                  </td>
+                );
+              })}
             </tr>
           ))}
+
+          {/* Middle row for time labels */}
           <tr>
             <td
               className="border border-gray-700 bg-black text-white text-center"
               style={{ width: "10%" }}
             >
-              {/* Displaying the selected token price */}
               {selectedTokenPrice !== null
                 ? `$${selectedTokenPrice.toFixed(2)}`
                 : "Loading..."}
@@ -77,19 +108,47 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
               </td>
             ))}
           </tr>
-          {negativeValues.map((row, index) => (
-            <tr key={index}>
+
+          {/* Render negative values */}
+          {negativeValues.map((row, rowIndex) => (
+            <tr key={rowIndex}>
               <td
                 className="border border-gray-700 text-black text-center"
                 style={{ backgroundColor: row.shade, width: "10%" }}
               >
-                <span className="value-text">{row.value}</span>
+                {row.value}
               </td>
-              {Array(10)
-                .fill(null)
-                .map((_, colIndex) => (
-                  <td key={colIndex} className="border border-gray-700"></td>
-                ))}
+              {timeLabels.map((timeLabel, colIndex) => {
+                const movement = parseFloat(row.value.replace("%", "")) / 100 || 0;
+                const timeInYears = timeLabelToYears(timeLabel.time);
+                const strikePrice =
+                  selectedTokenPrice !== null
+                    ? selectedTokenPrice * (1 + movement)
+                    : 0;
+
+                const optionPrice =
+                  selectedTokenPrice !== null
+                    ? calculateOptionPrice(
+                        selectedTokenPrice,
+                        strikePrice,
+                        timeInYears,
+                        0.5, // Volatility placeholder
+                        0.01 // Risk-free rate placeholder
+                      )
+                    : null;
+
+                return (
+                  <td
+                    key={colIndex}
+                    className="border border-gray-700 text-center"
+                    style={{ backgroundColor: "transparent" }}
+                  >
+                    {optionPrice !== null
+                      ? `$${optionPrice.toFixed(2)}`
+                      : "Loading..."}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

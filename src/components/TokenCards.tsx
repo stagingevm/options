@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-// Define the props that TokenCards will receive
 interface TokenCardsProps {
-  onSelectToken: (id: string, price: number) => void; // Function to call when selecting a token
+  onSelectToken: (id: string, price: number) => void;
 }
 
 const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
   const [prices, setPrices] = useState<{ [key: string]: number }>({});
+  const [selectedToken, setSelectedToken] = useState<string | null>(null);
+
   const cards = [
     { color: "#F2A900", text: "BTC", id: "bitcoin" },
     { color: "#5c77e1", text: "ETH", id: "ethereum" },
@@ -21,16 +22,15 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
 
   useEffect(() => {
     const fetchPrices = async () => {
-      const ids = cards.map(card => card.id).join(",");
+      const ids = cards.map((card) => card.id).join(",");
       const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`;
 
       try {
         const response = await fetch(url);
         const data = await response.json();
 
-        // Format the fetched data into the prices object
         const formattedPrices = Object.keys(data).reduce((acc, key) => {
-          acc[key] = data[key].usd; // Store price in USD
+          acc[key] = data[key].usd;
           return acc;
         }, {} as { [key: string]: number });
 
@@ -48,13 +48,28 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
       {cards.map((card, index) => (
         <div
           key={index}
-          style={{ ...styles.card, backgroundColor: card.color }}
-          onClick={() => onSelectToken(card.id, prices[card.id] || 0)} // Passing the dynamic price
+          className={`token-card ${selectedToken === card.id ? "selected" : ""}`}
+          style={{
+            ...styles.card,
+            backgroundColor: card.color,
+          }}
+          onClick={() => {
+            setSelectedToken(card.id);
+            onSelectToken(card.id, prices[card.id] || 0);
+          }}
         >
+          {selectedToken === card.id && (
+            <div
+              className="liquid"
+              style={{
+                ...styles.liquid,
+                backgroundColor: card.color,
+              }}
+            ></div>
+          )}
           <div style={styles.tokenText}>
             <div style={styles.tokenName}>{card.text}</div>
             <div style={styles.price}>
-              {/* Show the price, or "Loading..." if not available yet */}
               {prices[card.id] !== undefined ? `$${prices[card.id].toFixed(2)}` : "Loading..."}
             </div>
           </div>
@@ -78,29 +93,41 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    color: "white",
-    fontSize: "16px",
-    fontWeight: "bold",
     borderRadius: "10px",
     padding: "10px",
-    cursor: "pointer", // Make the card clickable
+    cursor: "pointer",
+    position: "relative", // Necessary for the liquid effect
+    overflow: "hidden", // Prevent overflow of the liquid effect
+    color: "white", // Default text color
+  },
+  liquid: {
+    position: "absolute",
+    top: "-80px",
+    left: "0",
+    width: "200px",
+    height: "200px",
+    boxShadow: "inset 0 0 50px rgba(0, 0, 0, 0.5)",
+    transition: "0.5s",
+    zIndex: 0, // Ensure liquid stays behind the text
   },
   tokenText: {
     display: "flex", // Align token name and price horizontally
     justifyContent: "space-between", // Space between the name and the price
     width: "100%", // Full width of the card
     alignItems: "center",
+    position: "relative", // Ensure text stays above the liquid effect
+    zIndex: 1, // Ensure text is above the liquid effect
   },
   tokenName: {
     fontSize: "18px",
     fontWeight: "bold",
-    color: "black",
+    color: "white", // Ensure text is white for visibility
   },
   price: {
     fontSize: "24px",
     fontWeight: "bold",
     marginLeft: "10px", // Add space between the name and price
-    color: "black",
+    color: "white", // Ensure price is white for visibility
   },
 };
 

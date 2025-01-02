@@ -7,11 +7,13 @@ import StatsComponent from "../components/StatsComponent";
 
 const App: React.FC = () => {
   const [selectedTokenSymbol, setSelectedTokenSymbol] = useState<string | null>(null); // Hold the token name
+  const [currentPrice, setCurrentPrice] = useState<number | null>(null); // Hold the token price
   const [currentView, setCurrentView] = useState<"OBuyer" | "OSeller">("OBuyer");
 
-  // Function to handle token selection and set its symbol
-  const handleSelectToken = (symbol: string) => {
-    setSelectedTokenSymbol(symbol); // Set the token name instead of price
+  // Function to handle token selection and set its symbol and price
+  const handleSelectToken = (symbol: string, price: number) => {
+    setSelectedTokenSymbol(symbol); // Set the token name
+    setCurrentPrice(price); // Set the token price
   };
 
   return (
@@ -27,7 +29,11 @@ const App: React.FC = () => {
         <div style={styles.mainContent}>
           {/* Chart Component */}
           <div style={styles.chart}>
-            <ChartComponent selectedTokenSymbol={selectedTokenSymbol} currentView={currentView} />
+            <ChartComponent
+              selectedTokenSymbol={selectedTokenSymbol}
+              currentPrice={currentPrice}
+              currentView={currentView}
+            />
           </div>
 
           {/* Bottom Row */}

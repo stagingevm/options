@@ -3,14 +3,15 @@ import OptionsTable from "./OptionsTable";
 
 interface ChartComponentProps {
   selectedTokenSymbol: string | null; // Token name
+  currentPrice: number | null; // Current price of the token
   currentView: "OBuyer" | "OSeller";
 }
 
-const ChartComponent: React.FC<ChartComponentProps> = ({ selectedTokenSymbol, currentView }) => {
+const ChartComponent: React.FC<ChartComponentProps> = ({ selectedTokenSymbol, currentPrice, currentView }) => {
   return (
     <div style={styles.container}>
       {currentView === "OBuyer" ? (
-        <OptionsTable selectedTokenSymbol={selectedTokenSymbol} /> // Render OptionsTable
+        <OptionsTable selectedTokenSymbol={selectedTokenSymbol} currentPrice={currentPrice} /> // Pass both props
       ) : (
         <div>{selectedTokenSymbol || "Select a token"}</div> // Placeholder for OSeller view
       )}

@@ -51,19 +51,16 @@ function Navbar({ setView }: NavbarProps) {
 
         {/* Wallet Button */}
         <div>
-          <a
+          <button
             onClick={walletAddress ? disconnectWallet : connectWallet}
-            className="relative inline-block text-center cursor-pointer"
+            className="px-4 py-2 rounded-full font-bold text-black bg-[#18e582] hover:bg-[#16cc72] border border-[#18e582] transition duration-300"
           >
-            <span className="text-black">
-              {walletAddress
-                ? `${walletAddress.substring(0, 6)}...${walletAddress.substring(
-                    walletAddress.length - 4
-                  )}`
-                : "Connect"}
-            </span>
-            <div className="liquid"></div>
-          </a>
+            {walletAddress
+              ? `${walletAddress.substring(0, 6)}...${walletAddress.substring(
+                  walletAddress.length - 4
+                )}`
+              : "Connect"}
+          </button>
         </div>
       </div>
     </nav>

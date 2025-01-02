@@ -22,7 +22,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     flexDirection: "column",
     marginLeft: "10px",
     padding: "5px 0", // Padding for spacing
-    overflow: "hidden", // Prevent scrolling
+    overflow: "visible", // Allow overflow for raised elements
+    position: "relative", // Required for z-index to work properly
   },
 };
 

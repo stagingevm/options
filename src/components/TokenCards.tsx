@@ -52,21 +52,13 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
           style={{
             ...styles.card,
             backgroundColor: card.color,
+            ...(selectedToken === card.id ? styles.selectedCard : {}),
           }}
           onClick={() => {
             setSelectedToken(card.id);
-            onSelectToken(card.text, prices[card.id] || 0); // Pass symbol instead of id
+            onSelectToken(card.text, prices[card.id] || 0);
           }}
         >
-          {selectedToken === card.id && (
-            <div
-              className="liquid"
-              style={{
-                ...styles.liquid,
-                backgroundColor: card.color,
-              }}
-            ></div>
-          )}
           <div style={styles.tokenText}>
             <div style={styles.tokenName}>{card.text}</div>
             <div style={styles.price}>
@@ -79,7 +71,6 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
   );
 };
 
-
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
     display: "flex",
@@ -87,6 +78,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     height: "100%",
     width: "100%",
     gap: "5px",
+    position: "relative",
   },
   card: {
     flex: 1,
@@ -97,38 +89,32 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: "10px",
     padding: "10px",
     cursor: "pointer",
-    position: "relative", // Necessary for the liquid effect
-    overflow: "hidden", // Prevent overflow of the liquid effect
-    color: "white", // Default text color
+    color: "white",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease",
+    position: "relative",
+    zIndex: 10, // Default z-index for non-selected cards
   },
-  liquid: {
-    position: "absolute",
-    top: "-80px",
-    left: "0",
-    width: "200px",
-    height: "200px",
-    boxShadow: "inset 0 0 50px rgba(0, 0, 0, 0.5)",
-    transition: "0.5s",
-    zIndex: 0, // Ensure liquid stays behind the text
+  selectedCard: {
+    transform: "scale(1.1) translateX(20px)",
+    boxShadow: "0 10px 20px rgba(0, 0, 0, 0.5)",
+    zIndex: 15, // Ensure it's above other cards
   },
   tokenText: {
-    display: "flex", // Align token name and price horizontally
-    justifyContent: "space-between", // Space between the name and the price
-    width: "100%", // Full width of the card
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
     alignItems: "center",
-    position: "relative", // Ensure text stays above the liquid effect
-    zIndex: 1, // Ensure text is above the liquid effect
   },
   tokenName: {
     fontSize: "18px",
     fontWeight: "bold",
-    color: "white", // Ensure text is white for visibility
+    color: "white",
   },
   price: {
     fontSize: "24px",
     fontWeight: "bold",
-    marginLeft: "10px", // Add space between the name and price
-    color: "white", // Ensure price is white for visibility
+    marginLeft: "10px",
+    color: "white",
   },
 };
 

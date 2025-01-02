@@ -1,10 +1,15 @@
 import React from "react";
 import OptionsTable from "./OptionsTable";
 
-const ChartComponent: React.FC = () => {
+interface ChartComponentProps {
+  selectedTokenPrice: number | undefined; // Expecting the selected token price from the parent
+}
+
+const ChartComponent: React.FC<ChartComponentProps> = ({ selectedTokenPrice }) => {
   return (
     <div style={styles.container}>
-      <OptionsTable />
+      {/* Pass selectedTokenPrice to the OptionsTable */}
+      <OptionsTable selectedTokenPrice={selectedTokenPrice} />
     </div>
   );
 };

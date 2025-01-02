@@ -1,11 +1,18 @@
-import React from "react";
-import Navbar from "../components/navbar"; // Import Navbar
+import React, { useState } from "react";
+import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import ChartComponent from "../components/ChartComponent";
 import TradingComponent from "../components/TradingComponent";
 import StatsComponent from "../components/StatsComponent";
 
 const App: React.FC = () => {
+  const [selectedTokenPrice, setSelectedTokenPrice] = useState<number | null>(null);
+
+  // Function to handle token selection and set its price
+  const handleSelectToken = (id: string, price: number) => {
+    setSelectedTokenPrice(price);
+  };
+
   return (
     <div style={styles.appContainer}>
       {/* Navbar */}
@@ -13,13 +20,13 @@ const App: React.FC = () => {
 
       <div style={styles.contentContainer}>
         {/* Sidebar */}
-        <Sidebar />
+        <Sidebar onSelectToken={handleSelectToken} />
 
         {/* Main Content */}
         <div style={styles.mainContent}>
           {/* Chart Component */}
           <div style={styles.chart}>
-            <ChartComponent />
+            <ChartComponent selectedTokenPrice={selectedTokenPrice} />
           </div>
 
           {/* Bottom Row */}

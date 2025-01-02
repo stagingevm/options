@@ -1,10 +1,14 @@
 import React from "react";
-import TokenCards from "./tokencards";
+import TokenCards from "./TokenCards";
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  onSelectToken: (id: string, price: number) => void; // Type for the function passed as prop
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ onSelectToken }) => {
   return (
     <div style={styles.sidebar}>
-      <TokenCards />
+      <TokenCards onSelectToken={onSelectToken} />
     </div>
   );
 };

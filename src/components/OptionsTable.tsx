@@ -1,6 +1,10 @@
 import React from "react";
 
-const OptionsTable: React.FC = () => {
+interface OptionsTableProps {
+  selectedTokenPrice: number | null; // Expecting the price to be passed as a prop
+}
+
+const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
   const positiveValues = [
     { value: "+20%", shade: "#18e582" },
     { value: "+10%", shade: "#28f087" },
@@ -58,7 +62,10 @@ const OptionsTable: React.FC = () => {
               className="border border-gray-700 bg-black text-white text-center"
               style={{ width: "10%" }}
             >
-              Ethereum
+              {/* Displaying the selected token price */}
+              {selectedTokenPrice !== null
+                ? `$${selectedTokenPrice.toFixed(2)}`
+                : "Loading..."}
             </td>
             {timeLabels.map((label, index) => (
               <td
@@ -92,4 +99,3 @@ const OptionsTable: React.FC = () => {
 };
 
 export default OptionsTable;
-

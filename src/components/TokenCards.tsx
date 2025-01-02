@@ -51,10 +51,12 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
           style={{ ...styles.card, backgroundColor: card.color }}
           onClick={() => onSelectToken(card.id, prices[card.id] || 0)} // Passing the dynamic price
         >
-          <div style={styles.tokenName}>{card.text}</div>
-          <div style={styles.price}>
-            {/* Show the price, or "Loading..." if not available yet */}
-            {prices[card.id] !== undefined ? `$${prices[card.id].toFixed(2)}` : "Loading..."}
+          <div style={styles.tokenText}>
+            <div style={styles.tokenName}>{card.text}</div>
+            <div style={styles.price}>
+              {/* Show the price, or "Loading..." if not available yet */}
+              {prices[card.id] !== undefined ? `$${prices[card.id].toFixed(2)}` : "Loading..."}
+            </div>
           </div>
         </div>
       ))}
@@ -83,6 +85,12 @@ const styles: { [key: string]: React.CSSProperties } = {
     padding: "10px",
     cursor: "pointer", // Make the card clickable
   },
+  tokenText: {
+    display: "flex", // Align token name and price horizontally
+    justifyContent: "space-between", // Space between the name and the price
+    width: "100%", // Full width of the card
+    alignItems: "center",
+  },
   tokenName: {
     fontSize: "18px",
     fontWeight: "bold",
@@ -91,7 +99,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   price: {
     fontSize: "24px",
     fontWeight: "bold",
-    marginLeft: "10px",
+    marginLeft: "10px", // Add space between the name and price
     color: "black",
   },
 };

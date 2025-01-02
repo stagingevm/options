@@ -12,13 +12,13 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
     { value: "+3%", shade: "#50ffa4" },
     { value: "+1%", shade: "#71ffb8" },
     { value: "+0.5%", shade: "#91ffd2" },
-    { value: "+0.25%", shade: "#c5ffe6" },
-    { value: "UP", shade: "#c5ffe6" },
+    { value: "+0.25%", shade: "#c5ffe6", },
+    { value: "UP", shade: "#c5ffe6", values: [165, 159, 153, 147, 141, 134, 128, 122, 116, 110]  },
   ];
 
   const negativeValues = [
-    { value: "DOWN", shade: "#ff8080" },
-    { value: "-0.25%", shade: "#ff8080" },
+    { value: "DOWN", shade: "#ff8080", values: [165, 159, 153, 147, 141, 134, 128, 122, 116, 110]  },
+    { value: "-0.25%", shade: "#ff8080"},
     { value: "-0.5%", shade: "#ff6666" },
     { value: "-1%", shade: "#ff4d4d" },
     { value: "-3%", shade: "#ff3333" },
@@ -59,7 +59,9 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
                   className="border border-gray-700 text-center"
                   style={{ backgroundColor: "transparent" }}
                 >
-                  {/* Empty cell */}
+                  {row.values && row.values[colIndex] !== undefined
+                    ? `+${row.values[colIndex]}`
+                    : ""}
                 </td>
               ))}
             </tr>
@@ -101,7 +103,9 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
                   className="border border-gray-700 text-center"
                   style={{ backgroundColor: "transparent" }}
                 >
-                  {/* Empty cell */}
+                  {row.values && row.values[colIndex] !== undefined
+                    ? `+${row.values[colIndex]}`
+                    : ""}
                 </td>
               ))}
             </tr>

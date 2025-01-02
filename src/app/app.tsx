@@ -7,6 +7,7 @@ import StatsComponent from "../components/StatsComponent";
 
 const App: React.FC = () => {
   const [selectedTokenPrice, setSelectedTokenPrice] = useState<number | null>(null);
+  const [currentView, setCurrentView] = useState<"OBuyer" | "OSeller">("OBuyer");
 
   // Function to handle token selection and set its price
   const handleSelectToken = (id: string, price: number) => {
@@ -15,8 +16,8 @@ const App: React.FC = () => {
 
   return (
     <div style={styles.appContainer}>
-      {/* Navbar */}
-      <Navbar />
+      {/* Navbar with view switcher */}
+      <Navbar setView={setCurrentView} />
 
       <div style={styles.contentContainer}>
         {/* Sidebar */}
@@ -26,7 +27,7 @@ const App: React.FC = () => {
         <div style={styles.mainContent}>
           {/* Chart Component */}
           <div style={styles.chart}>
-            <ChartComponent selectedTokenPrice={selectedTokenPrice} />
+            <ChartComponent selectedTokenPrice={selectedTokenPrice} currentView={currentView} />
           </div>
 
           {/* Bottom Row */}

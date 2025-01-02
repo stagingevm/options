@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 
-function Navbar() {
+interface NavbarProps {
+  setView: (view: "OBuyer" | "OSeller") => void;
+}
+
+function Navbar({ setView }: NavbarProps) {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   const connectWallet = async () => {
@@ -26,12 +30,23 @@ function Navbar() {
   return (
     <nav
       className="w-full bg-black text-white shadow-md sticky top-0 z-50"
-      style={{ borderBottom: "2px solid #18e582" }} // Add green bottom border
+      style={{ borderBottom: "2px solid #18e582" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-        {/* Logo */}
-        <div className="text-xxl font-bold" style={{ color: "#18e582" }}>
-          
+        {/* View Switcher */}
+        <div className="flex space-x-4">
+          <button
+            className="text-white hover:text-gray-300"
+            onClick={() => setView("OBuyer")}
+          >
+            OBuyer
+          </button>
+          <button
+            className="text-white hover:text-gray-300"
+            onClick={() => setView("OSeller")}
+          >
+            OSeller
+          </button>
         </div>
 
         {/* Wallet Button */}

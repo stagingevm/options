@@ -1,10 +1,10 @@
 import React from "react";
 
 interface OptionsTableProps {
-  selectedTokenPrice: number | null; // Current price of the token
+  selectedTokenSymbol: string | null; // Current symbol of the token
 }
 
-const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
+const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenSymbol }) => {
   const positiveValues = [
     { value: "+20%", shade: "#18e582", values: [1200, 1140, 1080, 1020, 960, 900, 840, 780, 720, 660] },
     { value: "+10%", shade: "#28f087", values: [683, 648, 614, 580, 546, 512, 478, 444, 410, 376] },
@@ -67,15 +67,13 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
             </tr>
           ))}
 
-          {/* Middle row for current price and time labels */}
+          {/* Middle row for current token symbol and time labels */}
           <tr>
             <td
               className="border border-gray-700 bg-black text-white text-center"
               style={{ width: "10%" }}
             >
-              {selectedTokenPrice !== null
-                ? `$${selectedTokenPrice.toFixed(2)}`
-                : "Loading..."}
+              {selectedTokenSymbol || "Loading..."}
             </td>
             {timeLabels.map((label, index) => (
               <td
@@ -115,5 +113,4 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
     </div>
   );
 };
-
 export default OptionsTable;

@@ -1,7 +1,7 @@
 import React from "react";
 
 interface SellerTableProps {
-  selectedTokenPrice: number | null; // Current price of the token
+  selectedTokenPrice: number | null; // Accept price as a prop
 }
 
 const SellerTable: React.FC<SellerTableProps> = ({ selectedTokenPrice }) => {

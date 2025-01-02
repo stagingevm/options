@@ -55,7 +55,7 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
           }}
           onClick={() => {
             setSelectedToken(card.id);
-            onSelectToken(card.id, prices[card.id] || 0);
+            onSelectToken(card.text, prices[card.id] || 0); // Pass symbol instead of id
           }}
         >
           {selectedToken === card.id && (
@@ -78,6 +78,7 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
     </div>
   );
 };
+
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {

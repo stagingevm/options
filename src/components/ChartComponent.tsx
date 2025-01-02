@@ -1,19 +1,18 @@
 import React from "react";
 import OptionsTable from "./OptionsTable";
-import SellerTable from "./SellerTable";
 
 interface ChartComponentProps {
-  selectedTokenPrice: number | null;
+  selectedTokenSymbol: string | null; // Token name
   currentView: "OBuyer" | "OSeller";
 }
 
-const ChartComponent: React.FC<ChartComponentProps> = ({ selectedTokenPrice, currentView }) => {
+const ChartComponent: React.FC<ChartComponentProps> = ({ selectedTokenSymbol, currentView }) => {
   return (
     <div style={styles.container}>
       {currentView === "OBuyer" ? (
-        <OptionsTable selectedTokenPrice={selectedTokenPrice} />
+        <OptionsTable selectedTokenSymbol={selectedTokenSymbol} /> // Render OptionsTable
       ) : (
-        <SellerTable selectedTokenPrice={selectedTokenPrice} />
+        <div>{selectedTokenSymbol || "Select a token"}</div> // Placeholder for OSeller view
       )}
     </div>
   );

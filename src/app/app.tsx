@@ -6,12 +6,12 @@ import TradingComponent from "../components/TradingComponent";
 import StatsComponent from "../components/StatsComponent";
 
 const App: React.FC = () => {
-  const [selectedTokenPrice, setSelectedTokenPrice] = useState<number | null>(null);
+  const [selectedTokenSymbol, setSelectedTokenSymbol] = useState<string | null>(null); // Hold the token name
   const [currentView, setCurrentView] = useState<"OBuyer" | "OSeller">("OBuyer");
 
-  // Function to handle token selection and set its price
-  const handleSelectToken = (id: string, price: number) => {
-    setSelectedTokenPrice(price);
+  // Function to handle token selection and set its symbol
+  const handleSelectToken = (symbol: string) => {
+    setSelectedTokenSymbol(symbol); // Set the token name instead of price
   };
 
   return (
@@ -27,7 +27,7 @@ const App: React.FC = () => {
         <div style={styles.mainContent}>
           {/* Chart Component */}
           <div style={styles.chart}>
-            <ChartComponent selectedTokenPrice={selectedTokenPrice} currentView={currentView} />
+            <ChartComponent selectedTokenSymbol={selectedTokenSymbol} currentView={currentView} />
           </div>
 
           {/* Bottom Row */}
@@ -62,7 +62,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   chart: {
     flex: 2, // Larger top component
     display: "flex",
-    marginBottom: "15px", // Adds 5px margin below the chart
+    marginBottom: "15px", // Adds margin below the chart
   },
   bottomRow: {
     flex: 1, // Bottom row with equal spacing

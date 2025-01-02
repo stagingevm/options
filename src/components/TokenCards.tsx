@@ -61,7 +61,7 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
         >
           <div style={styles.tokenText}>
             <div style={styles.tokenName}>{card.text}</div>
-            <div style={styles.price}>
+            <div className="token-price" style={styles.price}>
               {prices[card.id] !== undefined ? `$${prices[card.id].toFixed(2)}` : "Loading..."}
             </div>
           </div>
@@ -95,7 +95,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     zIndex: 10, // Default z-index for non-selected cards
   },
   selectedCard: {
-    transform: "scale(1.1) translateX(20px)",
+    transform: "scale(1.05) translateX(10px)", // Reduce right movement
     boxShadow: "0 10px 20px rgba(0, 0, 0, 0.5)",
     zIndex: 15, // Ensure it's above other cards
   },

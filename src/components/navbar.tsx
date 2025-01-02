@@ -45,7 +45,7 @@ function Navbar({ setView }: NavbarProps) {
             className="text-white hover:text-gray-300"
             onClick={() => setView("OSeller")}
           >
-            OSeller ODDS
+           OSeller ODDS
           </button>
         </div>
 

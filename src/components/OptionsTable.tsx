@@ -1,31 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 interface OptionsTableProps {
-  selectedTokenSymbol: string | null; // Current symbol of the token
+  selectedTokenSymbol?: string | null; // Optional because it's not used in the current code
   currentPrice: number | null; // Current price of the token
 }
 
-const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenSymbol, currentPrice }) => {
+const OptionsTable: React.FC<OptionsTableProps> = ({ currentPrice }) => {
+  const [isMobile, setIsMobile] = useState(false); // Detect mobile view
+  const [showLonger, setShowLonger] = useState(false); // Toggle for longer/shorter time frames on mobile
+
   const positiveValues = [
-    { value: "+20%", shade: "#18e582", multiplier: 0.2, values: [1200, 1140, 1080, 1020, 960, 900, 840, 780, 720, 660] },
-    { value: "+10%", shade: "#28f087", multiplier: 0.1, values: [683, 648, 614, 580, 546, 512, 478, 444, 410, 376] },
-    { value: "+5%", shade: "#3bfa8f", multiplier: 0.05, values: [424, 402, 380, 358, 336, 314, 292, 270, 248, 226] },
-    { value: "+3%", shade: "#50ffa4", multiplier: 0.03, values: [320, 303, 286, 269, 252, 235, 218, 201, 184, 167] },
-    { value: "+1%", shade: "#71ffb8", multiplier: 0.01, values: [217, 206, 195, 184, 173, 162, 151, 140, 129, 118] },
-    { value: "+0.5%", shade: "#91ffd2", multiplier: 0.005, values: [191, 182, 173, 164, 155, 146, 137, 128, 119, 110] },
-    { value: "+0.25%", shade: "#c5ffe6", multiplier: 0.0025, values: [178, 171, 164, 157, 150, 143, 136, 129, 122, 115] },
-    { value: "UP", shade: "#c5ffe6", multiplier: 0, values: [165, 159, 153, 147, 141, 134, 128, 122, 116, 110] },
+    { value: "+20%", shade: "#18e582", multiplier: 0.2, shortValues: [1200, 1140, 1080, 1020, 960], longValues: [900, 840, 780, 720, 660] },
+    { value: "+10%", shade: "#28f087", multiplier: 0.1, shortValues: [683, 648, 614, 580, 546], longValues: [512, 478, 444, 410, 376] },
+    { value: "+5%", shade: "#3bfa8f", multiplier: 0.05, shortValues: [424, 402, 380, 358, 336], longValues: [314, 292, 270, 248, 226] },
+    { value: "+3%", shade: "#50ffa4", multiplier: 0.03, shortValues: [320, 303, 286, 269, 252], longValues: [235, 218, 201, 184, 167] },
+    { value: "+1%", shade: "#71ffb8", multiplier: 0.01, shortValues: [217, 206, 195, 184, 173], longValues: [162, 151, 140, 129, 118] },
+    { value: "+0.5%", shade: "#91ffd2", multiplier: 0.005, shortValues: [191, 182, 173, 164, 155], longValues: [146, 137, 128, 119, 110] },
+    { value: "+0.25%", shade: "#c5ffe6", multiplier: 0.0025, shortValues: [178, 171, 164, 157, 150], longValues: [143, 136, 129, 122, 115] },
+    { value: "UP", shade: "#c5ffe6", multiplier: 0, shortValues: [165, 159, 153, 147, 141], longValues: [134, 128, 122, 116, 110] },
   ];
 
   const negativeValues = [
-    { value: "DOWN", shade: "#ff8080", multiplier: 0, values: [165, 159, 153, 147, 141, 134, 128, 122, 116, 110]},
-    { value: "-0.25%", shade: "#ff8080", multiplier: -0.0025, values: [178, 171, 164, 157, 150, 143, 136, 129, 122, 115] },
-    { value: "-0.5%", shade: "#ff6666", multiplier: -0.005, values: [191, 182, 173, 164, 155, 146, 137, 128, 119, 110] },
-    { value: "-1%", shade: "#ff4d4d", multiplier: -0.01, values: [217, 206, 195, 184, 173, 162, 151, 140, 129, 118] },
-    { value: "-3%", shade: "#ff3333", multiplier: -0.03, values: [320, 303, 286, 269, 252, 235, 218, 201, 184, 167] },
-    { value: "-5%", shade: "#ff1a1a", multiplier: -0.05, values: [424, 402, 380, 358, 336, 314, 292, 270, 248, 226] },
-    { value: "-10%", shade: "#ff0000", multiplier: -0.1, values: [683, 648, 614, 580, 546, 512, 478, 444, 410, 376] },
-    { value: "-20%", shade: "#ce0404", multiplier: -0.2, values: [1200, 1140, 1080, 1020, 960, 900, 840, 780, 720, 660] },
+    { value: "DOWN", shade: "#ff8080", multiplier: 0, shortValues: [165, 159, 153, 147, 141], longValues: [134, 128, 122, 116, 110] },
+    { value: "-0.25%", shade: "#ff8080", multiplier: -0.0025, shortValues: [178, 171, 164, 157, 150], longValues: [143, 136, 129, 122, 115] },
+    { value: "-0.5%", shade: "#ff6666", multiplier: -0.005, shortValues: [191, 182, 173, 164, 155], longValues: [146, 137, 128, 119, 110] },
+    { value: "-1%", shade: "#ff4d4d", multiplier: -0.01, shortValues: [217, 206, 195, 184, 173], longValues: [162, 151, 140, 129, 118] },
+    { value: "-3%", shade: "#ff3333", multiplier: -0.03, shortValues: [320, 303, 286, 269, 252], longValues: [235, 218, 201, 184, 167] },
+    { value: "-5%", shade: "#ff1a1a", multiplier: -0.05, shortValues: [424, 402, 380, 358, 336], longValues: [314, 292, 270, 248, 226] },
+    { value: "-10%", shade: "#ff0000", multiplier: -0.1, shortValues: [683, 648, 614, 580, 546], longValues: [512, 478, 444, 410, 376] },
+    { value: "-20%", shade: "#ce0404", multiplier: -0.2, shortValues: [1200, 1140, 1080, 1020, 960], longValues: [900, 840, 780, 720, 660] },
   ];
 
   const timeLabels = [
@@ -46,107 +49,105 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenSymbol, curren
     return (currentPrice * (1 + multiplier)).toFixed(2);
   };
 
+  const visibleTimeFrames = isMobile
+    ? showLonger
+      ? timeLabels.slice(5, 10) // Show longer time frames on mobile
+      : timeLabels.slice(0, 5) // Show shorter time frames on mobile
+    : timeLabels; // Show full chart on desktop
+
+  const visibleValues = (row: { shortValues: number[]; longValues: number[] }) =>
+    isMobile
+      ? showLonger
+        ? row.longValues
+        : row.shortValues
+      : [...row.shortValues, ...row.longValues]; // Concatenate for desktop
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768); // Set breakpoint for mobile
+    handleResize(); // Check on initial render
+    window.addEventListener("resize", handleResize); // Listen for window resize
+    return () => window.removeEventListener("resize", handleResize); // Cleanup
+  }, []);
+
   return (
     <div className="overflow-auto w-full h-full p-2">
-      <table className="table-fixed border-collapse border border-gray-700 text-white w-full h-full">
-        <tbody>
-          {/* Render positive values */}
-          {positiveValues.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {/* New column for calculated price */}
-              <td
-                className="border border-gray-700 text-center"
-                style={{ backgroundColor: row.shade, width: "10%" }}
-              >
-                {row.multiplier !== 0 ? (
-                  <span style={{ color: "green" }}> ${calculatePrice(row.multiplier)}</span>
-                ) : (
-                  "⬆️"
-                )}
-              </td>
-              {/* Existing columns */}
-              <td
-                className="border border-gray-700 text-black text-center"
-                style={{ backgroundColor: row.shade, width: "10%" }}
-              >
-                {row.value}
-              </td>
-              {timeLabels.map((_, colIndex) => (
-                <td
-                  key={colIndex}
-                  className="border border-gray-700 text-center"
-                  style={{ backgroundColor: "transparent" }}
-                >
-                  {row.values && row.values[colIndex] !== undefined
-                    ? `+${row.values[colIndex]}`
-                    : ""}
-                </td>
-              ))}
-            </tr>
-          ))}
+      {/* Toggle button for mobile */}
+      {isMobile && (
+        <div className="flex justify-center mb-2">
+          <button
+            onClick={() => setShowLonger(!showLonger)}
+            className="bg-green-500 text-white px-3 py-1 rounded text-sm"
+          >
+            {showLonger ? "Show Shorter" : "Show Longer"}
+          </button>
+        </div>
+      )}
 
-          {/* Middle row for current token symbol and time labels */}
-          <tr>
-            {/* New column for current price */}
-            <td
-              className="border border-gray-700 bg-black text-center"
-              style={{ width: "10%", color: "white" }}
-            >
-              {currentPrice ? `$${currentPrice.toFixed(2)}` : "Loading..."}
-            </td>
-            <td
-              className="border border-gray-700 bg-black text-white text-center"
-              style={{ width: "10%" }}
-            >
-              {selectedTokenSymbol || "Loading..."}
-            </td>
-            {timeLabels.map((label, index) => (
-              <td
-                key={index}
-                className="border border-gray-700 text-center"
-                style={{ backgroundColor: label.shade }}
-              >
-                <span style={{ color: "#000" }}>{label.time}</span>
-              </td>
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="table-fixed border-collapse border border-gray-700 text-white w-full">
+          <tbody>
+            {/* Positive values */}
+            {positiveValues.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                <td
+                  className="border border-gray-700 text-center"
+                  style={{ backgroundColor: row.shade, color: "black" }}
+                >
+                  {row.multiplier ? `$${calculatePrice(row.multiplier)}` : "⬆️"}
+                </td>
+                {visibleValues(row).map((value: number, colIndex: number) => (
+                  <td
+                    key={colIndex}
+                    className="border border-gray-700 text-center"
+                  >
+                    {value || ""}
+                  </td>
+                ))}
+              </tr>
             ))}
-          </tr>
 
-          {/* Render negative values */}
-          {negativeValues.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {/* New column for calculated price */}
+            {/* Time frame row */}
+            <tr>
               <td
-                className="border border-gray-700 text-center"
-                style={{ backgroundColor: row.shade, width: "10%" }}
+                className="border border-gray-700 bg-black text-center text-white"
+                style={{ width: "10%" }}
               >
-                {row.multiplier !== 0 ? (
-                  <span style={{ color: "black" }}> ${calculatePrice(row.multiplier)}</span>
-                ) : (
-                  "⬇️"
-                )}
+                {currentPrice ? `$${currentPrice.toFixed(2)}` : "Loading..."}
               </td>
-              {/* Existing columns */}
-              <td
-                className="border border-gray-700 text-black text-center"
-                style={{ backgroundColor: row.shade, width: "10%" }}
-              >
-                {row.value}
-              </td>
-              {timeLabels.map((_, colIndex) => (
+              {visibleTimeFrames.map((label, index) => (
                 <td
-                  key={colIndex}
+                  key={index}
                   className="border border-gray-700 text-center"
-                  style={{ backgroundColor: "transparent" }}
+                  style={{ backgroundColor: label.shade }}
                 >
-                  {row.values && row.values[colIndex] !== undefined
-                    ? `+${row.values[colIndex]}`
-                    : ""}
+                  {label.time}
                 </td>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+
+            {/* Negative values */}
+            {negativeValues.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                <td
+                  className="border border-gray-700 text-center"
+                  style={{ backgroundColor: row.shade, color: "black" }}
+                >
+                  {row.multiplier ? `$${calculatePrice(row.multiplier)}` : "⬇️"}
+                </td>
+                {visibleValues(row).map((value: number, colIndex: number) => (
+                  <td
+                    key={colIndex}
+                    className="border border-gray-700 text-center"
+                  >
+                    {value || ""}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

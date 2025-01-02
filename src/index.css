@@ -80,3 +80,9 @@ a:hover {
   z-index: 15; /* Ensures the card is above others */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Adds shadow for emphasis */
 }
+
+@media (max-width: 768px) {
+  .token-price {
+    display: none;
+  }
+}

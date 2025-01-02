@@ -2,7 +2,7 @@ import React from "react";
 import OptionsTable from "./OptionsTable";
 
 interface ChartComponentProps {
-  selectedTokenPrice: number | undefined; // Expecting the selected token price from the parent
+  selectedTokenPrice: number | null; // Match the type expected by OptionsTable
 }
 
 const ChartComponent: React.FC<ChartComponentProps> = ({ selectedTokenPrice }) => {

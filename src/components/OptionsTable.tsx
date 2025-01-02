@@ -1,8 +1,7 @@
 import React from "react";
-import { calculateOptionPrice, timeLabelToYears } from "./optionsPricing";
 
 interface OptionsTableProps {
-  selectedTokenPrice: number | null;
+  selectedTokenPrice: number | null; // Current price of the token
 }
 
 const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
@@ -54,41 +53,19 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
               >
                 {row.value}
               </td>
-              {timeLabels.map((timeLabel, colIndex) => {
-                const movement = parseFloat(row.value.replace("%", "")) / 100 || 0;
-                const timeInYears = timeLabelToYears(timeLabel.time);
-                const strikePrice =
-                  selectedTokenPrice !== null
-                    ? selectedTokenPrice * (1 + movement)
-                    : 0;
-
-                const optionPrice =
-                  selectedTokenPrice !== null
-                    ? calculateOptionPrice(
-                        selectedTokenPrice,
-                        strikePrice,
-                        timeInYears,
-                        0.5, // Volatility placeholder
-                        0.01 // Risk-free rate placeholder
-                      )
-                    : null;
-
-                return (
-                  <td
-                    key={colIndex}
-                    className="border border-gray-700 text-center"
-                    style={{ backgroundColor: "transparent" }}
-                  >
-                    {optionPrice !== null
-                      ? `$${optionPrice.toFixed(2)}`
-                      : "Loading..."}
-                  </td>
-                );
-              })}
+              {timeLabels.map((_, colIndex) => (
+                <td
+                  key={colIndex}
+                  className="border border-gray-700 text-center"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  {/* Empty cell */}
+                </td>
+              ))}
             </tr>
           ))}
 
-          {/* Middle row for time labels */}
+          {/* Middle row for current price and time labels */}
           <tr>
             <td
               className="border border-gray-700 bg-black text-white text-center"
@@ -118,37 +95,15 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ selectedTokenPrice }) => {
               >
                 {row.value}
               </td>
-              {timeLabels.map((timeLabel, colIndex) => {
-                const movement = parseFloat(row.value.replace("%", "")) / 100 || 0;
-                const timeInYears = timeLabelToYears(timeLabel.time);
-                const strikePrice =
-                  selectedTokenPrice !== null
-                    ? selectedTokenPrice * (1 + movement)
-                    : 0;
-
-                const optionPrice =
-                  selectedTokenPrice !== null
-                    ? calculateOptionPrice(
-                        selectedTokenPrice,
-                        strikePrice,
-                        timeInYears,
-                        0.5, // Volatility placeholder
-                        0.01 // Risk-free rate placeholder
-                      )
-                    : null;
-
-                return (
-                  <td
-                    key={colIndex}
-                    className="border border-gray-700 text-center"
-                    style={{ backgroundColor: "transparent" }}
-                  >
-                    {optionPrice !== null
-                      ? `$${optionPrice.toFixed(2)}`
-                      : "Loading..."}
-                  </td>
-                );
-              })}
+              {timeLabels.map((_, colIndex) => (
+                <td
+                  key={colIndex}
+                  className="border border-gray-700 text-center"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  {/* Empty cell */}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>

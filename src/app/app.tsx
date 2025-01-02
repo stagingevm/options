@@ -5,6 +5,7 @@ import ChartComponent from "../components/ChartComponent";
 import TradingComponent from "../components/TradingComponent";
 import StatsComponent from "../components/StatsComponent";
 
+
 const App: React.FC = () => {
   const [selectedTokenSymbol, setSelectedTokenSymbol] = useState<string | null>(null); // Hold the token name
   const [currentPrice, setCurrentPrice] = useState<number | null>(null); // Hold the token price

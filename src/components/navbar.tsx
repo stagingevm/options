@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ethers } from "ethers";
 
 interface NavbarProps {
-  setView: (view: "OBuyer" | "OSeller") => void;
+  setView: (view: "OBuyer") => void; // Only "OBuyer" remains
 }
 
 function Navbar({ setView }: NavbarProps) {
@@ -33,6 +33,9 @@ function Navbar({ setView }: NavbarProps) {
       style={{ borderBottom: "2px solid #18e582" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+        {/* Title */}
+        <h1 className="text-[#18e582] font-bold text-xl">EVM</h1>
+
         {/* View Switcher */}
         <div className="flex space-x-4">
           <button
@@ -40,12 +43,6 @@ function Navbar({ setView }: NavbarProps) {
             onClick={() => setView("OBuyer")}
           >
             OBuyer ODDS
-          </button>
-          <button
-            className="text-white hover:text-gray-300"
-            onClick={() => setView("OSeller")}
-          >
-           OSeller ODDS
           </button>
         </div>
 

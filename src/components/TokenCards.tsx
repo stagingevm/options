@@ -44,7 +44,7 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
 
         const formattedPrices = Object.keys(data).reduce((acc, key) => {
           // Get the number of decimals for the current token
-          const decimals = tokenDecimals[key] || 2; // Default to 2 decimals if not defined
+          const decimals = tokenDecimals[key] || 7; // Default to 2 decimals if not defined
           const price = data[key].usd;
 
           // Round the price to the specified decimals

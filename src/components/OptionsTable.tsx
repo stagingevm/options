@@ -46,7 +46,7 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ currentPrice }) => {
 
   const calculatePrice = (multiplier: number): string => {
     if (!currentPrice) return "N/A";
-    return (currentPrice * (1 + multiplier)).toFixed(7);
+    return (currentPrice * (1 + multiplier)).toFixed(6);
   };
 
   const visibleTimeFrames = isMobile
@@ -113,7 +113,7 @@ const OptionsTable: React.FC<OptionsTableProps> = ({ currentPrice }) => {
                 className="border border-gray-700 bg-black text-center text-white"
                 style={{ width: "10%" }}
               >
-                {currentPrice ? `$${currentPrice.toFixed(7)}` : "Loading..."}
+                {currentPrice ? `$${currentPrice.toFixed(6)}` : "Loading..."}
               </td>
               {visibleTimeFrames.map((label, index) => (
                 <td

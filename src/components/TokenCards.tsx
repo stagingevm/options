@@ -8,6 +8,19 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
   const [prices, setPrices] = useState<{ [key: string]: number }>({});
   const [selectedToken, setSelectedToken] = useState<string | null>(null);
 
+  // Define the decimal precision for each token
+  const tokenDecimals: { [key: string]: number } = {
+    bitcoin: 1,
+    ethereum: 1,
+    "pudgy-penguins": 6,
+    optimism: 5,
+    arbitrum: 5,
+    "matic-network": 7,
+    apecoin: 5,
+    uniswap: 4,
+    zksync: 7,
+  };
+
   const cards = [
     { color: "#F2A900", text: "BTC", id: "bitcoin" },
     { color: "#5c77e1", text: "ETH", id: "ethereum" },
@@ -30,7 +43,12 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
         const data = await response.json();
 
         const formattedPrices = Object.keys(data).reduce((acc, key) => {
-          acc[key] = data[key].usd;
+          // Get the number of decimals for the current token
+          const decimals = tokenDecimals[key] || 2; // Default to 2 decimals if not defined
+          const price = data[key].usd;
+
+          // Round the price to the specified decimals
+          acc[key] = parseFloat(price.toFixed(decimals));
           return acc;
         }, {} as { [key: string]: number });
 
@@ -62,7 +80,9 @@ const TokenCards: React.FC<TokenCardsProps> = ({ onSelectToken }) => {
           <div style={styles.tokenText}>
             <div style={styles.tokenName}>{card.text}</div>
             <div className="token-price" style={styles.price}>
-              {prices[card.id] !== undefined ? `$${prices[card.id].toFixed(2)}` : "Loading..."}
+              {prices[card.id] !== undefined
+                ? `$${prices[card.id].toFixed(tokenDecimals[card.id] || 2)}`  // Display with correct decimals
+                : "Loading..."}
             </div>
           </div>
         </div>
@@ -92,28 +112,28 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "white",
     transition: "transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease",
     position: "relative",
-    zIndex: 10, 
+    zIndex: 10,
   },
   selectedCard: {
-    transform: "scale(1.05) translateX(10px)", 
+    transform: "scale(1.05) translateX(10px)",
     boxShadow: "0 10px 20px rgba(0, 0, 0, 0.5)",
-    zIndex: 15, 
+    zIndex: 15,
   },
   tokenText: {
     display: "flex",
-    flexDirection: "column",  
+    flexDirection: "column",
     alignItems: "center",
     width: "100%",
   },
   tokenName: {
-    fontSize: "14px", 
+    fontSize: "14px",
     fontWeight: "bold",
     color: "white",
   },
   price: {
-    fontSize: "12px",  
+    fontSize: "12px",
     fontWeight: "bold",
-    marginTop: "5px",  
+    marginTop: "5px",
     color: "white",
   },
 };

@@ -3,7 +3,7 @@ import React from "react";
 import TokenCards from "./TokenCards";
 
 interface SidebarProps {
-  onSelectToken: (id: string, price: number) => void; // Type for the function passed as prop
+  onSelectToken: (id: string, price: number) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ onSelectToken }) => {
@@ -16,15 +16,15 @@ const Sidebar: React.FC<SidebarProps> = ({ onSelectToken }) => {
 
 const styles: { [key: string]: React.CSSProperties } = {
   sidebar: {
-    width: "5%", // Sidebar width
-    height: "98%", // Full height of the parent (Main Layout)
-    backgroundColor: "#1E293B", // Slate color
+    width: "5%",
+    height: "98%",
+    backgroundColor: "#1E293B",
     display: "flex",
     flexDirection: "column",
     marginLeft: "10px",
-    padding: "5px 0", // Padding for spacing
-    overflow: "visible", // Allow overflow for raised elements
-    position: "relative", // Required for z-index to work properly
+    padding: "5px 0",
+    overflow: "visible",
+    position: "relative",
   },
 };
 

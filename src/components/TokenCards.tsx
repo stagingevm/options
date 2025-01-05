@@ -92,28 +92,28 @@ const styles: { [key: string]: React.CSSProperties } = {
     color: "white",
     transition: "transform 0.3s ease, box-shadow 0.3s ease, z-index 0.3s ease",
     position: "relative",
-    zIndex: 10, // Default z-index for non-selected cards
+    zIndex: 10, 
   },
   selectedCard: {
-    transform: "scale(1.05) translateX(10px)", // Reduce right movement
+    transform: "scale(1.05) translateX(10px)", 
     boxShadow: "0 10px 20px rgba(0, 0, 0, 0.5)",
-    zIndex: 15, // Ensure it's above other cards
+    zIndex: 15, 
   },
   tokenText: {
     display: "flex",
-    justifyContent: "space-between",
-    width: "100%",
+    flexDirection: "column",  
     alignItems: "center",
+    width: "100%",
   },
   tokenName: {
-    fontSize: "18px",
+    fontSize: "14px", 
     fontWeight: "bold",
     color: "white",
   },
   price: {
-    fontSize: "24px",
+    fontSize: "12px",  
     fontWeight: "bold",
-    marginLeft: "10px",
+    marginTop: "5px",  
     color: "white",
   },
 };

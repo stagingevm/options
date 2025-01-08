@@ -12,10 +12,9 @@ const App: React.FC = () => {
       <div style={styles.contentContainer}>
         <Window />
         <div style={styles.cardsContainer}>
-          <Card title="Card 1" content="This is the first card." />
-          <Card title="Card 2" content="This is the second card." />
-          <Card title="Card 3" content="This is the third card." />
-          <Card title="Card 4" content="This is the fourth card." />
+          <Card title="Down" content="Price is Going Down." />
+          <Card title="Unsure" content="Unsure on Direction." />
+          <Card title="Up" content="Price is Going Up." />
         </div>
         <div style={styles.bottomContainer}>
           <TradingCard />

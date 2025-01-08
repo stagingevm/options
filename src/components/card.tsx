@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({ title, content }) => {
 
 const styles: { [key: string]: React.CSSProperties } = {
   cardContainer: {
-    width: "200px", // Fixed card width
+    width: "250px", // Fixed card width
     height: "150px", // Fixed card height
     backgroundColor: "#2A2723", // Dark background color
     border: "4px solid #00FF00", // Neon green border

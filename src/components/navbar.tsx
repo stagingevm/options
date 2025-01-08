@@ -13,13 +13,13 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "60px", // Adjust height as needed
+    height: "100px", // Increased height
     backgroundColor: "#2A2723", // Dark background color
     borderBottom: "4px solid #00FF00", // Neon green border
     color: "#fff", // White text color
   },
   navbarTitle: {
-    fontSize: "20px",
+    fontSize: "34px", // Increased font size
     fontWeight: "bold",
   },
 };

@@ -1,47 +1,19 @@
-import React, { useState } from "react";
-import Navbar from "../components/navbar";
-import Sidebar from "../components/sidebar";
-import ChartComponent from "../components/ChartComponent";
-import TradingComponent from "../components/TradingComponent";
-import StatsComponent from "../components/StatsComponent";
-
+import React from "react";
+import Navbar from "components/navbar";
+import Window from "components/Window";
+import Card from "components/card";
 
 const App: React.FC = () => {
-  const [selectedTokenSymbol, setSelectedTokenSymbol] = useState<string | null>(null); // Hold the token name
-  const [currentPrice, setCurrentPrice] = useState<number | null>(null); // Hold the token price
-  const [currentView, setCurrentView] = useState<"OBuyer" | "OSeller">("OBuyer");
-
-  // Function to handle token selection and set its symbol and price
-  const handleSelectToken = (symbol: string, price: number) => {
-    setSelectedTokenSymbol(symbol); // Set the token name
-    setCurrentPrice(price); // Set the token price
-  };
-
   return (
     <div style={styles.appContainer}>
-      {/* Navbar with view switcher */}
-      <Navbar setView={setCurrentView} />
-
+      <Navbar /> {/* Navbar remains at the top */}
       <div style={styles.contentContainer}>
-        {/* Sidebar */}
-        <Sidebar onSelectToken={handleSelectToken} />
-
-        {/* Main Content */}
-        <div style={styles.mainContent}>
-          {/* Chart Component */}
-          <div style={styles.chart}>
-            <ChartComponent
-              selectedTokenSymbol={selectedTokenSymbol}
-              currentPrice={currentPrice}
-              currentView={currentView}
-            />
-          </div>
-
-          {/* Bottom Row */}
-          <div style={styles.bottomRow}>
-            <TradingComponent />
-            <StatsComponent />
-          </div>
+        <Window /> {/* Window added to the center of the app */}
+        <div style={styles.cardsContainer}>
+          <Card title="Card 1" content="This is the first card." />
+          <Card title="Card 2" content="This is the second card." />
+          <Card title="Card 3" content="This is the third card." />
+          <Card title="Card 4" content="This is the fourth card." />
         </div>
       </div>
     </div>
@@ -51,30 +23,25 @@ const App: React.FC = () => {
 const styles: { [key: string]: React.CSSProperties } = {
   appContainer: {
     display: "flex",
-    flexDirection: "column", // Column layout to include Navbar
-    height: "100vh", // Full viewport height
-    width: "100vw", // Full viewport width
-    backgroundColor: "#0c0c0c", // Black background
+    flexDirection: "column",
+    height: "100vh",
+    width: "100vw",
+    backgroundColor: "#0c0c0c",
   },
   contentContainer: {
     display: "flex",
-    flex: 1, // Takes up all remaining space below Navbar
-  },
-  mainContent: {
-    flex: 1, // Takes the remaining space next to Sidebar
-    display: "flex",
     flexDirection: "column",
-    padding: "10px",
+    alignItems: "center", // Center content horizontally
+    flex: 1,
   },
-  chart: {
-    flex: 2, // Larger top component
+  cardsContainer: {
     display: "flex",
-    marginBottom: "15px", // Adds margin below the chart
-  },
-  bottomRow: {
-    flex: 1, // Bottom row with equal spacing
-    display: "flex",
-    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    flexWrap: "wrap", // Allow wrapping for smaller screens
+    gap: "20px", // Space between cards
+    marginTop: "10px", // Reduced space between window and cards
+    marginBottom: "25px",
   },
 };
 

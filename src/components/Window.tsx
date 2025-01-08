@@ -25,9 +25,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     width: "100%",
     maxWidth: "900px", // Maximum width set to 900px
     height: "60vh", // 3/4 of the viewport height for desktop
-    backgroundColor: "#2A2723", // Same dark color as navbar
+    backgroundColor: "#0E1811", // Same dark color as navbar
     borderRadius: "8px", // Rounded corners for a smooth look
-    border: "4px solid #00FF00", // Neon green border
+    border: "2px solid #00FF00", // Neon green border
     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Subtle shadow
     display: "flex",
     flexDirection: "column",

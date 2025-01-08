@@ -16,19 +16,19 @@ const Card: React.FC<CardProps> = ({ title, content }) => {
 
 const styles: { [key: string]: React.CSSProperties } = {
   cardContainer: {
-    width: "250px", // Fixed card width
-    height: "150px", // Fixed card height
-    backgroundColor: "#2A2723", // Dark background color
-    border: "4px solid #00FF00", // Neon green border
-    borderRadius: "8px", // Rounded corners
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Subtle shadow
+    width: "260px", // Default desktop width
+    height: "150px",
+    backgroundColor: "#0E1811",
+    border: "2px solid #00FF00",
+    borderRadius: "8px",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center", // Center content vertically
-    alignItems: "center", // Center content horizontally
+    justifyContent: "center",
+    alignItems: "center",
     padding: "10px",
     boxSizing: "border-box",
-    color: "#fff", // White text for contrast
+    color: "#fff",
     textAlign: "center",
   },
   cardTitle: {
@@ -39,5 +39,10 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontSize: "14px",
   },
 };
+
+// Apply media query for mobile
+if (window.innerWidth <= 768) {
+  styles.cardContainer.width = "134px"; // Set width for mobile
+}
 
 export default Card;

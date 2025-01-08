@@ -14,8 +14,8 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: "center",
     alignItems: "center",
     height: "100px", // Increased height
-    backgroundColor: "#2A2723", // Dark background color
-    borderBottom: "4px solid #00FF00", // Neon green border
+    backgroundColor: "#0E1811", // Dark background color
+    borderBottom: "2px solid #00FF00", // Neon green border
     color: "#fff", // White text color
   },
   navbarTitle: {
